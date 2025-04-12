@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Calendar, AlertCircle } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import { Calendar } from 'lucide-react';
 
 interface PaymentAlertProps {
   nextPayment?: string;
@@ -31,18 +30,13 @@ export const PaymentAlert = ({ nextPayment }: PaymentAlertProps) => {
   }, [nextPayment]);
 
   return (
-    <Card className="overflow-hidden bg-gradient-to-r from-papem-blue to-papem-dark text-white shadow-lg animate-fade-in">
-      <div className="p-3 flex items-center gap-3">
-        <div className="rounded-full bg-white/10 p-2">
-          <Calendar className="h-5 w-5 text-white" />
-        </div>
-        <div className="flex-1">
-          <p className="text-sm font-medium">Próximo Bilhete de Pagamento</p>
-          <p className="text-lg font-bold">{date}</p>
-        </div>
-        <AlertCircle className="h-5 w-5 text-yellow-300 animate-pulse-slow" />
+    <div className="bg-white/5 backdrop-blur-sm text-white rounded-lg p-3 shadow-sm border border-white/10 animate-fade-in">
+      <div className="flex items-center gap-2">
+        <Calendar className="h-4 w-4 text-yellow-300" />
+        <span className="text-xs font-light">Próximo Bilhete:</span>
+        <span className="text-sm font-medium">{date}</span>
       </div>
-    </Card>
+    </div>
   );
 };
 
