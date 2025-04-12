@@ -9,7 +9,7 @@ import ChatbotButton from '@/components/ChatbotButton';
 
 const Index = () => {
   const menuItems = [
-    { icon: <Wallet className="h-5 w-5 text-papem-blue" />, title: 'BP On-line', link: '/bp-online' },
+    { icon: <Wallet className="h-5 w-5 text-papem-blue" />, title: 'BP On-line', link: 'https://bponline.papem.mar.mil.br/bponline/login', externalLink: true },
     { icon: <Building className="h-5 w-5 text-papem-blue" />, title: 'SouGov.br', link: '/sougov' },
     { icon: <Building className="h-5 w-5 text-papem-blue" />, title: 'Bancos Conveniados', link: '/bancos' },
     { icon: <FileText className="h-5 w-5 text-papem-blue" />, title: 'e-Consig', link: '/econsig' },
@@ -48,6 +48,7 @@ const Index = () => {
             icon={item.icon}
             title={item.title}
             link={item.link}
+            externalLink={item.externalLink}
             className="bg-papem-blue/90 shadow-md animate-fade-in"
             delay={`${index * 0.1}s`}
           />

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export const Sidebar = () => {
   const menuItems = [
     { icon: <Home className="h-5 w-5 text-papem-blue" />, title: 'Início', link: '/' },
-    { icon: <Wallet className="h-5 w-5 text-papem-blue" />, title: 'BP On-line', link: '/bp-online' },
+    { icon: <Wallet className="h-5 w-5 text-papem-blue" />, title: 'BP On-line', link: 'https://bponline.papem.mar.mil.br/bponline/login', externalLink: true },
     { icon: <Building className="h-5 w-5 text-papem-blue" />, title: 'SouGov.br', link: '/sougov' },
     { icon: <Building className="h-5 w-5 text-papem-blue" />, title: 'Bancos Conveniados', link: '/bancos' },
     { icon: <FileText className="h-5 w-5 text-papem-blue" />, title: 'e-Consig', link: '/econsig' },
@@ -25,16 +25,31 @@ export const Sidebar = () => {
       
       <div className="flex-1 overflow-y-auto p-4 space-y-3">
         {menuItems.map((item, index) => (
-          <Link
-            key={index}
-            to={item.link}
-            className="flex items-center space-x-3 p-3 rounded-lg hover:bg-white/10 transition-colors text-white"
-          >
-            <div className="bg-white rounded-full p-2 flex items-center justify-center">
-              {item.icon}
-            </div>
-            <span>{item.title}</span>
-          </Link>
+          item.externalLink ? (
+            <a
+              key={index}
+              href={item.link}
+              target="_self"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-3 p-3 rounded-lg hover:bg-white/10 transition-colors text-white"
+            >
+              <div className="bg-white rounded-full p-2 flex items-center justify-center">
+                {item.icon}
+              </div>
+              <span>{item.title}</span>
+            </a>
+          ) : (
+            <Link
+              key={index}
+              to={item.link}
+              className="flex items-center space-x-3 p-3 rounded-lg hover:bg-white/10 transition-colors text-white"
+            >
+              <div className="bg-white rounded-full p-2 flex items-center justify-center">
+                {item.icon}
+              </div>
+              <span>{item.title}</span>
+            </Link>
+          )
         ))}
       </div>
       
