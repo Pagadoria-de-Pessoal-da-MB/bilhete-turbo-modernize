@@ -17,7 +17,7 @@ const MenuItem = ({ icon, title, link, className, delay, externalLink }: MenuIte
     return (
       <a
         href={link}
-        target="_self"
+        target="_self"  // This ensures links stay within the app context
         rel="noopener noreferrer"
         className={cn(
           "flex items-center justify-between rounded-xl p-3 bg-white/10 backdrop-blur-sm text-white transition-all hover:bg-white/20",
