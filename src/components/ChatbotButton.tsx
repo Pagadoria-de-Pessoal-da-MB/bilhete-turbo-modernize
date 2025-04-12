@@ -11,7 +11,7 @@ export default function ChatbotButton() {
   return (
     <Button 
       onClick={handleChatOpen}
-      className="fixed bottom-4 right-4 w-14 h-14 rounded-full bg-papem-blue shadow-lg flex items-center justify-center p-0 hover:bg-papem-light"
+      className="fixed bottom-4 right-4 w-14 h-14 rounded-full bg-blue-500 shadow-lg hover:bg-blue-600 transition-all transform hover:scale-105 flex items-center justify-center p-0 border-2 border-white animate-pulse-slow"
     >
       <MessageCircle className="h-6 w-6 text-white" />
     </Button>
