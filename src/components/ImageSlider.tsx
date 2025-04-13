@@ -1,13 +1,8 @@
 
-import { useEffect, useState, useRef } from 'react';
-import { 
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  type CarouselApi
-} from "@/components/ui/carousel";
+import React from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const images = [
   "/public/lovable-uploads/bceebf65-9025-4330-aad5-ef300d02b2ac.png",
@@ -15,63 +10,45 @@ const images = [
   "/public/lovable-uploads/2246b185-c70e-468b-bf5d-3d94e5af2133.png"
 ];
 
-export default function ImageSlider() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [api, setApi] = useState<CarouselApi | null>(null);
-  
-  useEffect(() => {
-    if (!api) return;
-    
-    const handleSelect = () => {
-      setActiveIndex(api.selectedScrollSnap());
-    };
-    
-    api.on("select", handleSelect);
-    
-    // Auto slide effect
-    const interval = setInterval(() => {
-      api.scrollNext();
-    }, 5000);
-    
-    return () => {
-      api.off("select", handleSelect);
-      clearInterval(interval);
-    };
-  }, [api]);
-  
-  useEffect(() => {
-    if (!api) return;
-    
-    // Only programmatically scroll if the index changed due to dot navigation
-    api.scrollTo(activeIndex);
-  }, [activeIndex, api]);
-  
+const ImageSlider: React.FC = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    arrows: false,
+    customPaging: (i: number) => (
+      <div 
+        style={{
+          width: '10px', 
+          height: '10px', 
+          borderRadius: '50%', 
+          background: 'white',
+          opacity: 0.3,
+          margin: '0 5px'
+        }} 
+      />
+    )
+  };
+
   return (
-    <Carousel className="w-full max-w-full" setApi={setApi}>
-      <CarouselContent>
+    <div className="w-full max-w-full">
+      <Slider {...settings}>
         {images.map((image, index) => (
-          <CarouselItem key={index}>
-            <div className="h-48 w-full overflow-hidden rounded-lg">
-              <img 
-                src={image} 
-                alt={`Slide ${index + 1}`} 
-                className="h-full w-full object-cover"
-              />
-            </div>
-          </CarouselItem>
+          <div key={index} className="h-48 w-full overflow-hidden rounded-lg">
+            <img 
+              src={image} 
+              alt={`Slide ${index + 1}`} 
+              className="h-full w-full object-cover"
+            />
+          </div>
         ))}
-      </CarouselContent>
-      <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1 z-10">
-        {images.map((_, index) => (
-          <button
-            key={index}
-            className={`h-2 w-2 rounded-full transition-all ${
-              index === activeIndex ? "bg-white" : "bg-white/30"
-            }`}
-            onClick={() => setActiveIndex(index)}
-          />
-        ))}
-      </div>
-    </Carousel>
+      </Slider>
+    </div>
   );
-}
+};
+
+export default ImageSlider;
