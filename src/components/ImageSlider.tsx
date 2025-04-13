@@ -1,11 +1,12 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { 
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi
 } from "@/components/ui/carousel";
 
 const images = [
@@ -16,18 +17,37 @@ const images = [
 
 export default function ImageSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [api, setApi] = useState<CarouselApi | null>(null);
   
   useEffect(() => {
+    if (!api) return;
+    
+    const handleSelect = () => {
+      setActiveIndex(api.selectedScrollSnap());
+    };
+    
+    api.on("select", handleSelect);
+    
     // Auto slide effect
     const interval = setInterval(() => {
-      setActiveIndex((current) => (current + 1) % images.length);
+      api.scrollNext();
     }, 5000);
     
-    return () => clearInterval(interval);
-  }, []);
+    return () => {
+      api.off("select", handleSelect);
+      clearInterval(interval);
+    };
+  }, [api]);
+  
+  useEffect(() => {
+    if (!api) return;
+    
+    // Only programmatically scroll if the index changed due to dot navigation
+    api.scrollTo(activeIndex);
+  }, [activeIndex, api]);
   
   return (
-    <Carousel className="w-full max-w-full" value={activeIndex} onValueChange={setActiveIndex}>
+    <Carousel className="w-full max-w-full" setApi={setApi}>
       <CarouselContent>
         {images.map((image, index) => (
           <CarouselItem key={index}>
