@@ -21,6 +21,11 @@ const MobileAppBrowser = ({ url, title }: MobileAppBrowserProps) => {
     return () => clearTimeout(timer);
   }, [url]);
 
+  const handleBackButton = () => {
+    // Navigate to home page
+    navigate('/');
+  };
+
   return (
     <div className="flex flex-col h-screen bg-white">
       {/* Browser top bar with time, signal, battery */}
@@ -44,7 +49,7 @@ const MobileAppBrowser = ({ url, title }: MobileAppBrowserProps) => {
       {/* Navigation bar with back button and title */}
       <div className="border-b border-gray-300 p-3 flex items-center">
         <button 
-          onClick={() => navigate(-1)} 
+          onClick={handleBackButton} 
           className="text-blue-600"
         >
           <ArrowLeft className="h-5 w-5" />
@@ -70,7 +75,9 @@ const MobileAppBrowser = ({ url, title }: MobileAppBrowserProps) => {
 
       {/* Bottom browser navigation */}
       <div className="bg-gray-100 p-2 flex justify-around items-center border-t border-gray-300">
-        <ArrowLeft className="h-5 w-5 text-gray-500" />
+        <button onClick={handleBackButton} className="text-gray-500">
+          <ArrowLeft className="h-5 w-5" />
+        </button>
         <div className="h-5 w-5 rotate-180 text-gray-500">
           <ArrowLeft className="h-5 w-5" />
         </div>
