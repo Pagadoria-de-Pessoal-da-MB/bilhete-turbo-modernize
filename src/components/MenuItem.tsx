@@ -14,11 +14,13 @@ interface MenuItemProps {
 
 const MenuItem = ({ icon, title, link, className, delay, externalLink }: MenuItemProps) => {
   if (externalLink) {
+    // For external links, we'll route to a new internal page that will display the content in a mobile app browser frame
+    const encodedUrl = encodeURIComponent(link);
+    const inAppBrowserLink = `/browser?url=${encodedUrl}&title=${encodeURIComponent(title)}`;
+    
     return (
-      <a
-        href={link}
-        target="_self"  // This ensures links stay within the app context
-        rel="noopener noreferrer"
+      <Link
+        to={inAppBrowserLink}
         className={cn(
           "flex items-center justify-between rounded-xl p-3 bg-white/10 backdrop-blur-sm text-white transition-all hover:bg-white/20",
           className
@@ -32,7 +34,7 @@ const MenuItem = ({ icon, title, link, className, delay, externalLink }: MenuIte
           <span className="font-medium">{title}</span>
         </div>
         <ChevronRight className="h-5 w-5 text-white/70" />
-      </a>
+      </Link>
     );
   }
 
