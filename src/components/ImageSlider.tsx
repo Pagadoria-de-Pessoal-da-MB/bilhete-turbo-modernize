@@ -1,8 +1,5 @@
 
-import React from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import React, { useState, useEffect } from 'react';
 
 const images = [
   "/public/lovable-uploads/bceebf65-9025-4330-aad5-ef300d02b2ac.png",
@@ -11,34 +8,32 @@ const images = [
 ];
 
 const ImageSlider: React.FC = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 5000,
-    arrows: false,
-    customPaging: (i: number) => (
-      <div 
-        style={{
-          width: '10px', 
-          height: '10px', 
-          borderRadius: '50%', 
-          background: 'white',
-          opacity: 0.3,
-          margin: '0 5px'
-        }} 
-      />
-    )
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Auto-rotate slides
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Handle manual navigation
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
   };
 
   return (
-    <div className="w-full max-w-full">
-      <Slider {...settings}>
+    <div className="w-full max-w-full relative">
+      <div className="h-48 w-full overflow-hidden rounded-lg">
         {images.map((image, index) => (
-          <div key={index} className="h-48 w-full overflow-hidden rounded-lg">
+          <div 
+            key={index}
+            className={`absolute top-0 left-0 h-full w-full transition-opacity duration-500 ${
+              index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
+            }`}
+          >
             <img 
               src={image} 
               alt={`Slide ${index + 1}`} 
@@ -46,7 +41,21 @@ const ImageSlider: React.FC = () => {
             />
           </div>
         ))}
-      </Slider>
+      </div>
+      
+      {/* Navigation dots */}
+      <div className="flex justify-center mt-2 absolute bottom-2 left-0 right-0">
+        {images.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`w-2 h-2 mx-1 rounded-full transition-all ${
+              index === currentIndex ? 'bg-white' : 'bg-white/30'
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
     </div>
   );
 };
