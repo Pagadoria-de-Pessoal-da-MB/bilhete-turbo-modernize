@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from 'react';
 
 const images = [
-  "/public/lovable-uploads/bceebf65-9025-4330-aad5-ef300d02b2ac.png",
-  "/public/lovable-uploads/04798dd7-3215-4664-bd12-a2edbf4f02f5.png",
-  "/public/lovable-uploads/2246b185-c70e-468b-bf5d-3d94e5af2133.png"
+  "/public/lovable-uploads/c9ea390d-834a-42ab-8a80-2b0b8cf8a7f0.png",
+  "/public/lovable-uploads/e3b6b131-e79e-436b-9e50-0d5ae3234810.png",
+  "/public/lovable-uploads/0c83530e-67c5-426e-ae1b-9e11246ef926.png"
 ];
 
 const ImageSlider: React.FC = () => {
